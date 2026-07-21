@@ -1,0 +1,887 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Brand Portal — Design Reference</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://rsms.me/">
+<link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+<style>
+/* ─── Reset ─────────────────────────────────────────────── */
+*{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+body{font-family:'Inter var',Inter,ui-sans-serif,system-ui,sans-serif;background:#F3F4F6;color:#111827;}
+
+/* ─── Shell ─────────────────────────────────────────────── */
+.shell{display:grid;grid-template-columns:220px 1fr;min-height:100vh;}
+.side{position:sticky;top:0;height:100vh;overflow-y:auto;background:#fff;border-right:1px solid #E5E7EB;padding:20px 14px;}
+.side-logo{padding:0 6px 16px;border-bottom:1px solid #EEF2F6;margin-bottom:12px;}
+.side-logo .name{font-size:14px;font-weight:800;color:#071640;letter-spacing:-.01em;}
+.side-logo .sub{font-size:9px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:#9CA3AF;margin-top:3px;}
+.side-group{font-size:9px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:#D1D5DB;padding:16px 8px 4px;}
+.side a{display:block;padding:4px 8px;border-radius:8px;font-size:12px;font-weight:500;color:#4B5563;text-decoration:none;}
+.side a:hover{background:#F3F4F6;color:#071640;}
+.side a.active{background:#EEF2FF;color:#071640;font-weight:700;}
+
+.main{padding:32px 40px 80px;max-width:1200px;margin:0 auto;width:100%;}
+section{padding:40px 0;border-bottom:1px solid #EEF2F6;}
+section:last-child{border-bottom:none;}
+h2.sec-title{font-size:22px;font-weight:700;color:#071640;letter-spacing:-.015em;margin-bottom:6px;}
+p.sec-desc{font-size:14px;color:#4B5563;margin-bottom:24px;max-width:560px;line-height:1.6;}
+
+/* ─── Utilities ─────────────────────────────────────────── */
+.grid{display:grid;gap:12px;}
+.g2{grid-template-columns:repeat(2,1fr);}
+.g3{grid-template-columns:repeat(3,1fr);}
+.g4{grid-template-columns:repeat(4,1fr);}
+.g5{grid-template-columns:repeat(5,1fr);}
+.g6{grid-template-columns:repeat(6,1fr);}
+.sub-label{font-size:9px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:#9CA3AF;margin:20px 0 10px;}
+code{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:12px;background:#F3F4F6;padding:2px 6px;border-radius:4px;color:#071640;}
+
+/* ─── Color Swatch ──────────────────────────────────────── */
+.swatch{border-radius:12px;border:1px solid #E5E7EB;overflow:hidden;background:#fff;}
+.swatch .chip{height:64px;}
+.swatch .info{padding:8px 12px;}
+.swatch .sname{font-size:12px;font-weight:700;color:#111827;}
+.swatch .shex{font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6B7280;margin-top:2px;}
+.swatch .suse{font-size:12px;color:#9CA3AF;margin-top:2px;line-height:1.4;}
+
+/* ─── Token Row ─────────────────────────────────────────── */
+.tok{display:flex;align-items:center;gap:12px;padding:8px 12px;background:#fff;border:1px solid #E5E7EB;border-radius:8px;}
+.tok+.tok{margin-top:4px;}
+.tok .demo{flex-shrink:0;}
+.tok .tlabel{font-size:12px;font-weight:700;color:#071640;min-width:80px;}
+.tok .tval{font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6B7280;margin-left:auto;}
+.tok .tuse{font-size:12px;color:#9CA3AF;margin-left:12px;flex:1;}
+
+/* ─── Type Sample ───────────────────────────────────────── */
+.type-row{display:grid;grid-template-columns:110px 1fr 200px;gap:16px;align-items:center;padding:12px 16px;background:#fff;border:1px solid #E5E7EB;border-radius:8px;}
+.type-row+.type-row{margin-top:6px;}
+.type-meta{font-size:12px;color:#9CA3AF;line-height:1.5;}
+.type-meta strong{display:block;font-size:12px;font-weight:700;color:#4B5563;}
+.type-spec{font-family:'IBM Plex Mono',monospace;font-size:12px;color:#9CA3AF;text-align:right;line-height:1.6;}
+
+/* ─── Component card ────────────────────────────────────── */
+.comp{background:#fff;border:1px solid #E5E7EB;border-radius:12px;padding:20px;}
+.comp-title{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#9CA3AF;margin-bottom:14px;}
+.comp-body{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
+
+/* ─── Buttons ───────────────────────────────────────────── */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:0 16px;height:44px;border-radius:8px;font-size:14px;font-weight:500;font-family:inherit;cursor:pointer;border:none;transition:background 200ms cubic-bezier(.4,0,.2,1);}
+.btn-primary{background:#071640;color:#fff;}
+.btn-primary:hover{background:#15254D;}
+.btn-ghost{background:transparent;color:#071640;border:1px solid #E5E7EB;}
+.btn-ghost:hover{background:#F3F4F6;}
+.btn-danger{background:#DC2626;color:#fff;}
+.btn-danger:hover{background:#b91c1c;}
+.btn-disabled{background:#F3F4F6;color:#9CA3AF;cursor:not-allowed;}
+.btn-sm{height:30px;padding:0 12px;font-size:12px;}
+.btn-pill{border-radius:100px;}
+
+/* ─── Pills & Tags ──────────────────────────────────────── */
+.pill{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:100px;font-size:12px;font-weight:600;letter-spacing:.02em;}
+.pill-success{background:#ECFDF5;color:#059669;}
+.pill-warning{background:#FFFBEB;color:#D97706;}
+.pill-danger{background:#FEF2F2;color:#DC2626;}
+.pill-info{background:#EFF6FF;color:#2563EB;}
+.pill-primary{background:#EEF2FF;color:#071640;}
+.pill-muted{background:#F3F4F6;color:#6B7280;}
+.tag{display:inline-flex;align-items:center;padding:3px 8px;border-radius:4px;font-size:12px;font-weight:600;letter-spacing:.02em;}
+.tag-teal{background:#F0FDFA;color:#0D9488;}
+.tag-rose{background:#FFF1F2;color:#E11D48;}
+.tag-purple{background:#F5F3FF;color:#9333EA;}
+.tag-amber{background:#FFFBEB;color:#F59E0B;}
+
+/* ─── Cards ─────────────────────────────────────────────── */
+.card{background:#fff;border:1px solid #E5E7EB;border-radius:12px;padding:20px;box-shadow:0 1px 3px rgba(15,23,42,.06),0 1px 2px rgba(15,23,42,.04);}
+.card:hover{box-shadow:0 4px 12px rgba(15,23,42,.08);}
+.card-accent-red{border-top:3px solid #DC2626;}
+.card-accent-teal{border-top:3px solid #0D9488;}
+.card-accent-amber{border-top:3px solid #F59E0B;}
+.card-accent-primary{border-top:3px solid #071640;}
+.kpi-card{background:#fff;border:1px solid #E5E7EB;border-radius:12px;padding:16px;box-shadow:0 1px 3px rgba(15,23,42,.06);}
+.kpi-label{font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:#6B7280;}
+.kpi-value{font-size:28px;font-weight:700;color:#111827;letter-spacing:-.02em;font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;margin-top:4px;}
+.kpi-trend{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;padding:3px 8px;border-radius:100px;margin-top:6px;}
+.kpi-trend-up{background:#ECFDF5;color:#059669;}
+.kpi-trend-dn{background:#FEF2F2;color:#DC2626;}
+
+/* ─── Form fields ───────────────────────────────────────── */
+.field-wrap{display:flex;flex-direction:column;gap:4px;}
+.field-label{font-size:12px;font-weight:600;color:#4B5563;letter-spacing:.4px;}
+.field{height:44px;padding:0 12px;border:1px solid #E5E7EB;border-radius:8px;font-size:14px;font-family:inherit;color:#111827;background:#fff;width:100%;}
+.field:focus{outline:none;border-color:#071640;box-shadow:inset 0 0 0 1px #071640;}
+.field-dense{height:36px;font-size:12px;}
+/* Custom select — remove native arrow, add SVG via position:relative wrapper */
+.field-wrap{position:relative;}
+select.field{
+  -webkit-appearance:none;appearance:none;
+  padding-right:32px;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239CA3AF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 12px center;
+}
+.field-error{border-color:#DC2626;}
+.field-error-msg{font-size:12px;color:#DC2626;margin-top:2px;}
+.field-hint{font-size:12px;color:#9CA3AF;margin-top:2px;}
+.field-disabled{background:#F3F4F6;color:#9CA3AF;cursor:not-allowed;}
+fieldset.bp-fieldset{border:1px solid #D1D5DB;border-radius:12px;padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+fieldset.bp-fieldset legend{font-size:12px;font-weight:600;color:#4B5563;padding:0 6px;}
+
+/* ─── Material Floating Label Select ───────────────── */
+.mat-wrap{position:relative;margin-top:4px;}
+.mat-label-top{font-size:12px;font-weight:600;color:#4B5563;display:block;margin-bottom:4px;letter-spacing:.4px;}
+/* Closed (no value): label sits inside input via placeholder-like element */
+.mat-closed .mat-inner{
+  position:relative;height:44px;border:1px solid #D1D5DB;border-radius:8px;
+  background:#fff;display:flex;align-items:center;padding:0 36px 0 12px;cursor:pointer;
+}
+.mat-closed .mat-placeholder{font-size:14px;color:#9CA3AF;}
+.mat-closed .mat-chevron{position:absolute;right:12px;top:50%;transform:translateY(-50%);pointer-events:none;color:#9CA3AF;}
+/* Has value: label floats onto border (fieldset/legend style) */
+.mat-has-value fieldset{
+  border:1.5px solid #071640;border-radius:8px;padding:0;margin:0;
+  position:relative;
+}
+.mat-has-value fieldset legend{
+  font-size:12px;font-weight:600;color:#071640;
+  padding:0 4px;margin-left:8px;line-height:1;
+}
+.mat-has-value .mat-inner{
+  height:40px;display:flex;align-items:center;padding:0 36px 0 12px;cursor:pointer;
+  gap:6px;flex-wrap:wrap;min-height:40px;
+}
+.mat-has-value .mat-value-text{font-size:14px;color:#111827;}
+.mat-has-value .mat-chevron{position:absolute;right:12px;top:50%;transform:translateY(-50%);pointer-events:none;color:#6B7280;}
+/* Pill tags for multi-select */
+.mat-pill{display:inline-flex;align-items:center;gap:4px;background:#EEF2FF;color:#071640;
+  font-size:12px;font-weight:600;padding:2px 8px 2px 10px;border-radius:100px;}
+.mat-pill-x{font-size:14px;font-weight:400;opacity:.5;cursor:pointer;line-height:1;}
+/* Dropdown panel */
+.mat-dropdown{
+  border:1px solid #E5E7EB;border-radius:8px;margin-top:4px;
+  background:#fff;box-shadow:0 4px 16px rgba(15,23,42,.10);overflow:hidden;
+}
+.mat-option{
+  display:flex;align-items:center;gap:10px;height:40px;padding:0 14px;
+  font-size:14px;color:#374151;cursor:pointer;
+}
+.mat-option:hover{background:#F9FAFB;}
+.mat-option input[type=checkbox]{width:16px;height:16px;accent-color:#071640;cursor:pointer;flex-shrink:0;}
+.mat-option.opt-checked{color:#071640;font-weight:500;background:#F9FAFB;}
+
+/* ─── Navigation ────────────────────────────────────────── */
+.nav-demo{background:#071640;border-radius:12px;padding:12px 8px;width:180px;}
+.nav-item{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;font-size:12px;font-weight:500;color:rgba(255,255,255,.72);cursor:pointer;}
+.nav-item:hover{background:rgba(255,255,255,.06);}
+.nav-item.nav-active{background:#fff;color:#071640;font-weight:700;}
+.nav-dot{width:8px;height:8px;border-radius:50%;background:currentColor;opacity:.6;}
+
+/* ─── Table demo ────────────────────────────────────────── */
+.tbl{width:100%;border-collapse:collapse;font-size:12px;}
+.tbl th{padding:8px 12px;text-align:left;font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#6B7280;border-bottom:1px solid #E5E7EB;background:#F9FAFB;}
+.tbl td{padding:8px 12px;border-bottom:1px solid #F3F4F6;color:#374151;}
+.tbl tr:hover td{background:#F9FAFB;}
+.tbl td.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;text-align:right;}
+
+/* ─── Shadow demos ──────────────────────────────────────── */
+.shadow-box{background:#fff;border-radius:8px;padding:16px 12px;font-size:12px;font-weight:600;color:#4B5563;text-align:center;}
+
+/* ─── Layout diagrams ───────────────────────────────────── */
+.layout-diagram{background:#fff;border:1px solid #E5E7EB;border-radius:12px;overflow:hidden;font-size:12px;}
+.layout-topbar{background:#fff;border-bottom:1px solid #E5E7EB;padding:8px 14px;font-weight:700;font-size:12px;color:#071640;display:flex;align-items:center;justify-content:space-between;}
+.layout-body{display:grid;grid-template-columns:140px 1fr;min-height:200px;}
+.layout-sidebar{background:#071640;padding:10px 8px;}
+.layout-content{padding:12px;}
+.layout-filter{background:#F9FAFB;border-bottom:1px solid #E5E7EB;padding:8px 12px;font-size:12px;color:#6B7280;display:flex;gap:6px;align-items:center;}
+.layout-table-area{padding:12px;flex:1;}
+.layout-label{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#9CA3AF;margin-bottom:4px;}
+.layout-block{background:#F3F4F6;border-radius:4px;height:24px;display:flex;align-items:center;padding:0 8px;font-size:12px;color:#9CA3AF;}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<!-- ── Sidebar nav ── -->
+<nav class="side">
+  <div class="side-logo">
+    <div class="name">Brand Portal</div>
+    <div class="sub">Design Reference</div>
+  </div>
+  <div class="side-group">Tokens</div>
+  <a href="#colors">Màu sắc</a>
+  <a href="#type">Kiểu chữ</a>
+  <a href="#spacing">Khoảng cách</a>
+  <a href="#radius">Border Radius</a>
+  <a href="#shadow">Đổ bóng</a>
+  <div class="side-group">Components</div>
+  <a href="#buttons">Nút bấm</a>
+  <a href="#pills">Pill & Tag</a>
+  <a href="#cards">Card & KPI</a>
+  <a href="#forms">Form & Input</a>
+  <a href="#nav-comp">Navigation</a>
+  <a href="#tables">Bảng dữ liệu</a>
+  <div class="side-group">Patterns</div>
+  <a href="#layout-table">Màn hình danh sách</a>
+  <a href="#layout-form">Màn hình form</a>
+  <a href="#layout-detail">Màn hình chi tiết</a>
+  <a href="#layout-dialog">Dialog</a>
+  <div class="side-group">Quy tắc</div>
+  <a href="#states">Trạng thái</a>
+  <a href="#data">Hiển thị dữ liệu</a>
+  <a href="#motion">Chuyển động</a>
+  <a href="#principles">Nguyên tắc</a>
+</nav>
+
+<main class="main">
+
+<!-- ══ COLORS ══════════════════════════════════════════════ -->
+<section id="colors">
+  <h2 class="sec-title">Màu sắc</h2>
+  <p class="sec-desc">Navy #071640 là màu chủ đạo duy nhất (không phải indigo — đã chốt lại ở v3). Red chỉ dùng cho destructive. Một accent màu mỗi surface.</p>
+
+  <div class="sub-label">Primary</div>
+  <div class="grid g4">
+    <div class="swatch"><div class="chip" style="background:#071640"></div><div class="info"><div class="sname">Primary</div><div class="shex">#071640</div><div class="suse">Buttons, CTAs, nav active, links</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#15254D"></div><div class="info"><div class="sname">Primary Hover</div><div class="shex">#15254D</div><div class="suse">Button hover states</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#EEF0F6"></div><div class="info"><div class="sname">Primary Soft</div><div class="shex">#EEF0F6</div><div class="suse">Selected row, tinted surface</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#D8DCE6"></div><div class="info"><div class="sname">Primary Tint</div><div class="shex">#D8DCE6</div><div class="suse">Subtle accent background</div></div></div>
+  </div>
+
+  <div class="sub-label">Semantic</div>
+  <div class="grid g4">
+    <div class="swatch"><div class="chip" style="background:#059669"></div><div class="info"><div class="sname">Success</div><div class="shex">#059669</div><div class="suse">Completed, approved, positive</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#D97706"></div><div class="info"><div class="sname">Warning</div><div class="shex">#D97706</div><div class="suse">Caution, pending states</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#DC2626"></div><div class="info"><div class="sname">Danger</div><div class="shex">#DC2626</div><div class="suse">Delete, error, destructive only</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#2563EB"></div><div class="info"><div class="sname">Info</div><div class="shex">#2563EB</div><div class="suse">Informational, syncing</div></div></div>
+  </div>
+  <div class="grid g4" style="margin-top:12px;">
+    <div class="swatch"><div class="chip" style="background:#ECFDF5"></div><div class="info"><div class="sname">Success Soft</div><div class="shex">#ECFDF5</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#FFFBEB"></div><div class="info"><div class="sname">Warning Soft</div><div class="shex">#FFFBEB</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#FEF2F2"></div><div class="info"><div class="sname">Danger Soft</div><div class="shex">#FEF2F2</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#EFF6FF"></div><div class="info"><div class="sname">Info Soft</div><div class="shex">#EFF6FF</div></div></div>
+  </div>
+
+  <div class="sub-label">Neutral (Slate)</div>
+  <div class="grid g5">
+    <div class="swatch"><div class="chip" style="background:#F9FAFB"></div><div class="info"><div class="sname">Slate 50</div><div class="shex">#F9FAFB</div><div class="suse">Alt row, input bg</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#F3F4F6"></div><div class="info"><div class="sname">Slate 100</div><div class="shex">#F3F4F6</div><div class="suse">App background</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#E5E7EB"></div><div class="info"><div class="sname">Slate 200</div><div class="shex">#E5E7EB</div><div class="suse">Border default</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#D1D5DB"></div><div class="info"><div class="sname">Slate 300</div><div class="shex">#D1D5DB</div><div class="suse">Border strong</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#9CA3AF"></div><div class="info"><div class="sname">Slate 400</div><div class="shex">#9CA3AF</div><div class="suse">Muted, placeholder</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#6B7280"></div><div class="info"><div class="sname">Slate 500</div><div class="shex">#6B7280</div><div class="suse">Secondary text</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#4B5563"></div><div class="info"><div class="sname">Slate 600</div><div class="shex">#4B5563</div><div class="suse">Secondary text</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#374151"></div><div class="info"><div class="sname">Slate 700</div><div class="shex">#374151</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#1F2937"></div><div class="info"><div class="sname">Slate 800</div><div class="shex">#1F2937</div><div class="suse">Accent, dark text</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#111827"></div><div class="info"><div class="sname">Slate 900</div><div class="shex">#111827</div><div class="suse">Deepest foreground</div></div></div>
+  </div>
+
+  <div class="sub-label">Surfaces</div>
+  <div class="grid g4">
+    <div class="swatch"><div class="chip" style="background:#F3F4F6;border-bottom:1px solid #E5E7EB;"></div><div class="info"><div class="sname">App Background</div><div class="shex">#F3F4F6</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#FFFFFF;border-bottom:1px solid #E5E7EB;"></div><div class="info"><div class="sname">Card / Panel</div><div class="shex">#FFFFFF</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#EEF2F6;border-bottom:1px solid #E5E7EB;"></div><div class="info"><div class="sname">Sunken</div><div class="shex">#EEF2F6</div><div class="suse">Disabled input, recessed</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#071640"></div><div class="info"><div class="sname">Sidebar</div><div class="shex">#162040</div><div class="suse">Brand sidebar shell (navy, đậm hơn Primary)</div></div></div>
+  </div>
+
+  <div class="sub-label">Category / Accent</div>
+  <div class="grid g5">
+    <div class="swatch"><div class="chip" style="background:#0D9488"></div><div class="info"><div class="sname">Teal</div><div class="shex">#0D9488</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#E11D48"></div><div class="info"><div class="sname">Rose</div><div class="shex">#E11D48</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#9333EA"></div><div class="info"><div class="sname">Purple</div><div class="shex">#9333EA</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#F59E0B"></div><div class="info"><div class="sname">Amber</div><div class="shex">#F59E0B</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#4F46E5"></div><div class="info"><div class="sname">Indigo</div><div class="shex">#4F46E5</div></div></div>
+  </div>
+</section>
+
+<!-- ══ TYPOGRAPHY ══════════════════════════════════════════ -->
+<section id="type">
+  <h2 class="sec-title">Kiểu chữ</h2>
+  <p class="sec-desc"><strong>UI / Body:</strong> Inter (300–700) &nbsp;·&nbsp; <strong>Số / ID / Code:</strong> IBM Plex Mono (400, 500, 600). Default body: <strong>Body/sm 14px</strong>. Min size: Body/xsm 12px.</p>
+
+  <div class="sub-label">Type Roles</div>
+  <div class="type-row"><div class="type-meta"><strong>H1</strong>24px · 500</div><div style="font-size:24px;font-weight:500;line-height:1.33;letter-spacing:-.025em;color:#111827;">Tiêu đề trang</div><div class="type-spec">24px / 500 / lh 32px<br>ls −0.025em (chốt 2026-07-06, BA Lead điều chỉnh xuống từ 30px DOM thật)</div></div>
+  <div class="type-row"><div class="type-meta"><strong>H2</strong>24px · 700</div><div style="font-size:24px;font-weight:700;line-height:1.25;letter-spacing:-.015em;color:#111827;">Section Header</div><div class="type-spec">24px / 700 / lh 1.25<br>ls −0.015em</div></div>
+  <div class="type-row"><div class="type-meta"><strong>H3</strong>18px · 600</div><div style="font-size:18px;font-weight:600;line-height:1.3;color:#111827;">Card / Panel Title</div><div class="type-spec">18px / 600 / lh 1.3</div></div>
+  <div class="type-row"><div class="type-meta"><strong>Subtitle</strong>16px · 500</div><div style="font-size:16px;font-weight:500;line-height:1.35;color:#111827;">Sub-section Label</div><div class="type-spec">16px / 500 / lh 1.35</div></div>
+  <div class="type-row"><div class="type-meta"><strong>Lead</strong>14px · 400</div><div style="font-size:14px;font-weight:400;line-height:1.6;color:#4B5563;">Intro description text cho tính năng</div><div class="type-spec">14px / 400 / lh 1.6</div></div>
+  <div class="type-row"><div class="type-meta"><strong>Body/sm</strong>14px · 400</div><div style="font-size:14px;font-weight:400;line-height:1.6;color:#4B5563;">Default body — tất cả UI text, table cell, description</div><div class="type-spec">14px / 400 / lh 1.6<br><em>Default body</em></div></div>
+  <div class="type-row"><div class="type-meta"><strong>Body/xsm</strong>12px · 400</div><div style="font-size:12px;font-weight:400;line-height:1.6;color:#9CA3AF;">Caption · meta · timestamp · helper text — kích thước tối thiểu</div><div class="type-spec">12px / 400 / lh 1.6<br><em>Min size</em></div></div>
+  <div class="type-row"><div class="type-meta"><strong>Label</strong>12px · 600</div><div style="font-size:12px;font-weight:600;line-height:1;letter-spacing:.6px;text-transform:uppercase;color:#4B5563;">FORM LABEL UPPERCASE</div><div class="type-spec">12px / 600 / uppercase<br>Form labels, table headers</div></div>
+  <div class="type-row"><div class="type-meta"><strong>Eyebrow</strong>12px · 600</div><div style="font-size:12px;font-weight:600;line-height:1;letter-spacing:1.2px;text-transform:uppercase;color:#071640;">SECTION EYEBROW</div><div class="type-spec">12px / 600 / uppercase<br>ls +1.2px · indigo</div></div>
+  <div class="type-row"><div class="type-meta"><strong>Stat</strong>32px · 700</div><div style="font-size:32px;font-weight:700;line-height:1;letter-spacing:-.02em;color:#111827;font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;">482,500,000</div><div class="type-spec">32px / 700 / lh 1<br>IBM Plex Mono · tabular</div></div>
+  <div class="type-row"><div class="type-meta"><strong>Mono</strong>13px · 400</div><div style="font-size:14px;font-weight:400;font-family:'IBM Plex Mono',monospace;color:#111827;font-feature-settings:'zero';">BP-2024-001234 · #111827</div><div class="type-spec">13px / IBM Plex Mono<br>IDs, codes, slashed zero</div></div>
+</section>
+
+<!-- ══ SPACING ══════════════════════════════════════════════ -->
+<section id="spacing">
+  <h2 class="sec-title">Khoảng cách</h2>
+  <p class="sec-desc">4px base grid. Tất cả spacing là bội số của 4.</p>
+  <div style="display:flex;flex-direction:column;gap:8px;">
+    <div class="tok"><div class="demo"><div style="width:4px;height:16px;background:#071640;border-radius:2px;"></div></div><div class="tlabel">s-1</div><div class="tuse">Tight gap</div><div class="tval">4px</div></div>
+    <div class="tok"><div class="demo"><div style="width:8px;height:16px;background:#071640;border-radius:2px;"></div></div><div class="tlabel">s-2</div><div class="tuse">Form field gap</div><div class="tval">8px</div></div>
+    <div class="tok"><div class="demo"><div style="width:12px;height:16px;background:#071640;border-radius:2px;"></div></div><div class="tlabel">s-3</div><div class="tuse">Filter field gap, dense padding</div><div class="tval">12px</div></div>
+    <div class="tok"><div class="demo"><div style="width:16px;height:16px;background:#071640;border-radius:2px;"></div></div><div class="tlabel">s-4</div><div class="tuse">Standard internal padding</div><div class="tval">16px</div></div>
+    <div class="tok"><div class="demo"><div style="width:20px;height:16px;background:#071640;border-radius:2px;"></div></div><div class="tlabel">s-5</div><div class="tuse">Card padding (comfortable)</div><div class="tval">20px</div></div>
+    <div class="tok"><div class="demo"><div style="width:24px;height:16px;background:#071640;border-radius:2px;"></div></div><div class="tlabel">s-6</div><div class="tuse">Section gap</div><div class="tval">24px</div></div>
+    <div class="tok"><div class="demo"><div style="width:32px;height:16px;background:#071640;border-radius:2px;"></div></div><div class="tlabel">s-8</div><div class="tuse">Large section gap</div><div class="tval">32px</div></div>
+    <div class="tok"><div class="demo"><div style="width:40px;height:16px;background:#071640;border-radius:2px;"></div></div><div class="tlabel">s-10</div><div class="tuse">Page section padding</div><div class="tval">40px</div></div>
+    <div class="tok"><div class="demo"><div style="width:48px;height:16px;background:#071640;border-radius:2px;"></div></div><div class="tlabel">s-12</div><div class="tuse">Large page padding</div><div class="tval">48px</div></div>
+    <div class="tok"><div class="demo"><div style="width:64px;height:16px;background:#071640;border-radius:2px;"></div></div><div class="tlabel">s-16</div><div class="tuse">Topbar height</div><div class="tval">64px</div></div>
+  </div>
+</section>
+
+<!-- ══ BORDER RADIUS ════════════════════════════════════════ -->
+<section id="radius">
+  <h2 class="sec-title">Border Radius</h2>
+  <p class="sec-desc">Scale: 0, 1, 2, 4 — sau 4 trở đi là bội số của 4 (8, 12, 16, 24). Pill = 100px. Cards luôn dùng lg = 12px.</p>
+  <div style="display:flex;flex-direction:column;gap:8px;">
+    <div class="tok"><div class="demo"><div style="width:28px;height:28px;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:0;"></div></div><div class="tlabel">none · 0</div><div class="tuse">Sharp corners — table cells, dividers</div><div class="tval">0px</div></div>
+    <div class="tok"><div class="demo"><div style="width:28px;height:28px;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:2px;"></div></div><div class="tlabel">xs · 2px</div><div class="tuse">Micro elements (accent bar, checkbox)</div><div class="tval">2px</div></div>
+    <div class="tok"><div class="demo"><div style="width:28px;height:28px;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:4px;"></div></div><div class="tlabel">sm · 4px</div><div class="tuse">Tags, small chips, badges, ID badge</div><div class="tval">4px</div></div>
+    <div class="tok"><div class="demo"><div style="width:28px;height:28px;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:8px;"></div></div><div class="tlabel">md · 8px</div><div class="tuse">Buttons (default), inputs, nav items, alerts</div><div class="tval">8px</div></div>
+    <div class="tok"><div class="demo"><div style="width:28px;height:28px;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:12px;"></div></div><div class="tlabel">lg · 12px</div><div class="tuse"><strong>Cards</strong> — default radius cho tất cả card surfaces</div><div class="tval">12px</div></div>
+    <div class="tok"><div class="demo"><div style="width:28px;height:28px;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:16px;"></div></div><div class="tlabel">xl · 16px</div><div class="tuse">Dialogs, modals, large containers</div><div class="tval">16px</div></div>
+    <div class="tok"><div class="demo"><div style="width:28px;height:28px;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:24px;"></div></div><div class="tlabel">2xl · 24px</div><div class="tuse">Large modals, bottom sheets</div><div class="tval">24px</div></div>
+    <div class="tok"><div class="demo"><div style="width:48px;height:28px;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:100px;"></div></div><div class="tlabel">pill · 100px</div><div class="tuse">Pills, toggles, badges, count chips</div><div class="tval">100px</div></div>
+  </div>
+</section>
+
+<!-- ══ SHADOWS ══════════════════════════════════════════════ -->
+<section id="shadow">
+  <h2 class="sec-title">Đổ bóng / Elevation</h2>
+  <p class="sec-desc">Cool-tinted (slate base). Không dùng warm shadows. 6 mức elevation.</p>
+  <div class="grid g3">
+    <div class="shadow-box" style="box-shadow:0 1px 2px rgba(15,23,42,.05);">xs<br><span style="font-size:12px;color:#9CA3AF;font-weight:400;">Subtle row hover</span></div>
+    <div class="shadow-box" style="box-shadow:0 1px 3px rgba(15,23,42,.06),0 1px 2px rgba(15,23,42,.04);">sm<br><span style="font-size:12px;color:#9CA3AF;font-weight:400;">Card default (resting)</span></div>
+    <div class="shadow-box" style="box-shadow:0 4px 12px rgba(15,23,42,.08);">md<br><span style="font-size:12px;color:#9CA3AF;font-weight:400;">Card hover state</span></div>
+    <div class="shadow-box" style="box-shadow:0 10px 28px rgba(15,23,42,.10);">lg<br><span style="font-size:12px;color:#9CA3AF;font-weight:400;">Dropdowns, popovers</span></div>
+    <div class="shadow-box" style="box-shadow:0 20px 50px rgba(15,23,42,.14);">xl<br><span style="font-size:12px;color:#9CA3AF;font-weight:400;">Modals, dialogs, sticky</span></div>
+    <div class="shadow-box" style="box-shadow:0 6px 18px rgba(7,22,64,.28);border-top:2px solid #071640;">brand<br><span style="font-size:12px;color:#9CA3AF;font-weight:400;">Primary CTA button</span></div>
+  </div>
+</section>
+
+<!-- ══ BUTTONS ══════════════════════════════════════════════ -->
+<section id="buttons">
+  <h2 class="sec-title">Nút bấm</h2>
+  <p class="sec-desc">Sentence case Vietnamese. Hover: darken only — không scale, không lift, không animate position.</p>
+  <div class="comp">
+    <div class="comp-title">Variants</div>
+    <div class="comp-body">
+      <button class="btn btn-primary">Lưu thay đổi</button>
+      <button class="btn btn-ghost">Hủy</button>
+      <button class="btn btn-danger">Xóa</button>
+      <button class="btn btn-disabled" disabled>Không khả dụng</button>
+    </div>
+  </div>
+  <div class="comp" style="margin-top:12px;">
+    <div class="comp-title">Sizes & Shapes</div>
+    <div class="comp-body">
+      <button class="btn btn-primary">Default 36px</button>
+      <button class="btn btn-primary btn-sm">Small 30px</button>
+      <button class="btn btn-primary btn-pill">Pill shape</button>
+    </div>
+  </div>
+  <div style="margin-top:12px;padding:12px 14px;background:#fff;border:1px solid #E5E7EB;border-radius:8px;font-size:12px;color:#4B5563;">
+    <strong style="color:#071640;">Radius rules:</strong> Default 8px · Square variant 6px · Pill 100px<br>
+    <strong style="color:#071640;">Primary CTA shadow:</strong> <code>0 6px 18px rgba(7,22,64,.28)</code>
+  </div>
+</section>
+
+<!-- ══ PILLS & TAGS ══════════════════════════════════════════ -->
+<section id="pills">
+  <h2 class="sec-title">Pill, Tag & Badge</h2>
+  <p class="sec-desc">Pill (radius 100px) cho status & filter. Tag (radius 4px) cho metadata nhỏ hơn. Màu theo semantic palette.</p>
+  <div class="comp">
+    <div class="comp-title">Status Pills (radius 100px)</div>
+    <div class="comp-body">
+      <span class="pill pill-success">Đã duyệt</span>
+      <span class="pill pill-warning">Chờ xử lý</span>
+      <span class="pill pill-danger">Từ chối</span>
+      <span class="pill pill-info">Đang đồng bộ</span>
+      <span class="pill pill-primary">Đang hoạt động</span>
+      <span class="pill pill-muted">Đã lưu trữ</span>
+    </div>
+  </div>
+  <div class="comp" style="margin-top:12px;">
+    <div class="comp-title">Category Tags (radius 4px)</div>
+    <div class="comp-body">
+      <span class="tag tag-teal">Teal</span>
+      <span class="tag tag-rose">Rose</span>
+      <span class="tag tag-purple">Purple</span>
+      <span class="tag tag-amber">Amber</span>
+    </div>
+  </div>
+  <div style="margin-top:12px;padding:12px 14px;background:#fff;border:1px solid #E5E7EB;border-radius:8px;font-size:12px;color:#4B5563;line-height:1.8;">
+    <strong style="color:#059669;">Success</strong> → Hoàn thành / Đã duyệt / Đang hoạt động &nbsp;·&nbsp;
+    <strong style="color:#D97706;">Warning</strong> → Chờ xử lý / Nháp &nbsp;·&nbsp;
+    <strong style="color:#DC2626;">Danger</strong> → Lỗi / Từ chối / Đã xóa &nbsp;·&nbsp;
+    <strong style="color:#2563EB;">Info</strong> → Đang đồng bộ / Thông tin
+  </div>
+</section>
+
+<!-- ══ CARDS ════════════════════════════════════════════════ -->
+<section id="cards">
+  <h2 class="sec-title">Card & KPI</h2>
+  <p class="sec-desc">White bg, 1px border, radius 12px, padding 20px. Hover: shadow sm → md.</p>
+  <div class="grid g3">
+    <div class="card"><div style="font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#9CA3AF;margin-bottom:8px;">Card mặc định</div><div style="font-size:14px;color:#4B5563;">Nội dung card với shadow-sm mặc định. Hover sẽ chuyển sang shadow-md.</div></div>
+    <div class="card card-accent-teal"><div style="font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#0D9488;margin-bottom:8px;">Accent Teal</div><div style="font-size:14px;color:#4B5563;">Top-border 3px teal. Dùng cho phân loại.</div></div>
+    <div class="card card-accent-red"><div style="font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#DC2626;margin-bottom:8px;">Accent Red</div><div style="font-size:14px;color:#4B5563;">Top-border 3px red. Dùng cho cảnh báo.</div></div>
+  </div>
+  <div class="sub-label">KPI Cards</div>
+  <div class="grid g4">
+    <div class="kpi-card"><div class="kpi-label">Doanh thu</div><div class="kpi-value">2.48 tỷ</div><span class="kpi-trend kpi-trend-up">↑ 12.4%</span></div>
+    <div class="kpi-card"><div class="kpi-label">Đơn hàng</div><div class="kpi-value">1,284</div><span class="kpi-trend kpi-trend-up">↑ 8.1%</span></div>
+    <div class="kpi-card"><div class="kpi-label">Cửa hàng</div><div class="kpi-value">482</div><span class="kpi-trend kpi-trend-dn">↓ 2.3%</span></div>
+    <div class="kpi-card"><div class="kpi-label">Compliance</div><div class="kpi-value">87.5%</div><span class="kpi-trend kpi-trend-up">↑ 4.2%</span></div>
+  </div>
+</section>
+
+<!-- ══ FORMS ════════════════════════════════════════════════ -->
+<section id="forms">
+  <h2 class="sec-title">Form & Input</h2>
+  <p class="sec-desc">Standard height 44px. Dense (filter) height 36px. Label: 12px semi-bold uppercase #4B5563.</p>
+  <div class="grid g4">
+    <div class="field-wrap"><label class="field-label">TÊN CỬA HÀNG</label><input class="field" type="text" placeholder="Nhập tên cửa hàng" value=""></div>
+    <div class="field-wrap"><label class="field-label">TÊN CỬA HÀNG</label><input class="field" type="text" value="Cửa hàng Minh Tâm"></div>
+    <div class="field-wrap"><label class="field-label">EMAIL</label><input class="field field-error" type="text" value="email sai định dạng"><div class="field-error-msg">Email không đúng định dạng</div></div>
+    <div class="field-wrap"><label class="field-label">TRẠNG THÁI</label><input class="field field-disabled" type="text" value="Không thể chỉnh sửa" disabled><div class="field-hint">Trường này chỉ đọc</div></div>
+  </div>
+  <div class="sub-label">Dense (Filter fields — 36px)</div>
+  <div class="grid g5">
+    <div class="field-wrap"><input class="field field-dense" type="text" placeholder="Tìm kiếm..."></div>
+    <div class="field-wrap"><select class="field field-dense"><option>Tất cả trạng thái</option></select></div>
+    <div class="field-wrap"><input class="field field-dense" type="date"></div>
+    <div class="field-wrap"><input class="field field-dense" type="date"></div>
+    <div class="field-wrap"><button class="btn btn-ghost" style="width:100%;height:36px;font-size:12px;">Xóa bộ lọc</button></div>
+  </div>
+  <div class="sub-label">Fieldset / Form Section</div>
+  <fieldset class="bp-fieldset">
+    <legend>Thông tin cơ bản</legend>
+    <div class="field-wrap"><label class="field-label">TÊN</label><input class="field" type="text" placeholder="Nhập tên..."></div>
+    <div class="field-wrap"><label class="field-label">MÃ</label><input class="field" type="text" placeholder="Tự động tạo" disabled style="background:#EEF2F6;color:#9CA3AF;"></div>
+    <div class="field-wrap"><label class="field-label">NHÓM</label><select class="field"><option>Chọn nhóm...</option></select></div>
+    <div class="field-wrap"><label class="field-label">TRẠNG THÁI</label><select class="field"><option>Đang hoạt động</option></select></div>
+  </fieldset>
+
+  <div class="sub-label">Floating Label Select (Angular Material outlined)</div>
+  <p class="sec-desc" style="margin-bottom:16px;">Label nằm trên input khi chưa chọn. Khi có giá trị, label thu nhỏ và "bay lên" ngồi trên viền (fieldset/legend). Focus border <code>#071640</code>.</p>
+  <div class="grid g4" style="align-items:start;">
+
+    <!-- State 1: Closed, no value -->
+    <div>
+      <div class="sub-label" style="margin-top:0;margin-bottom:8px;">Chưa chọn</div>
+      <div class="mat-wrap mat-closed">
+        <span style="font-size:14px;color:#6B7280;display:block;margin-bottom:4px;">Trạng thái kết nối</span>
+        <div class="mat-inner">
+          <span class="mat-placeholder"></span>
+          <svg class="mat-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- State 2: Has value (label floats onto border) -->
+    <div>
+      <div class="sub-label" style="margin-top:0;margin-bottom:8px;">Đã chọn 1 giá trị</div>
+      <div class="mat-wrap mat-has-value">
+        <fieldset>
+          <legend>Trạng thái kết nối</legend>
+          <div class="mat-inner">
+            <span class="mat-value-text">Đã kết nối</span>
+            <svg class="mat-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+
+    <!-- State 3: Multi-select with pills -->
+    <div>
+      <div class="sub-label" style="margin-top:0;margin-bottom:8px;">Multi-select (có pills)</div>
+      <div class="mat-wrap mat-has-value">
+        <fieldset>
+          <legend>Trạng thái kết nối</legend>
+          <div class="mat-inner" style="flex-wrap:wrap;gap:4px;padding-top:6px;padding-bottom:6px;height:auto;min-height:44px;">
+            <span class="mat-pill">Chưa kết nối <span class="mat-pill-x">×</span></span>
+            <span class="mat-pill">Đã kết nối <span class="mat-pill-x">×</span></span>
+            <svg class="mat-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+
+    <!-- State 4: Open dropdown -->
+    <div>
+      <div class="sub-label" style="margin-top:0;margin-bottom:8px;">Dropdown mở (1 checked)</div>
+      <div class="mat-wrap mat-has-value">
+        <fieldset>
+          <legend>Trạng thái kết nối</legend>
+          <div class="mat-inner">
+            <span class="mat-value-text">Đã kết nối</span>
+            <svg class="mat-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform:translateY(-50%) rotate(180deg);"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </fieldset>
+        <div class="mat-dropdown">
+          <label class="mat-option"><input type="checkbox"> Chưa kết nối</label>
+          <label class="mat-option opt-checked"><input type="checkbox" checked> Đã kết nối</label>
+          <label class="mat-option"><input type="checkbox"> Huỷ kết nối</label>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ NAVIGATION ══════════════════════════════════════════ -->
+<section id="nav-comp">
+  <h2 class="sec-title">Navigation</h2>
+  <p class="sec-desc">Sidebar navy #162040, full height, logo ở trên. Accordion: parent group (icon + label + chevron) → sub-items thụt lề. Active sub-item: nền rgba(255,255,255,.1), text trắng đậm.</p>
+  <div style="display:flex;gap:24px;align-items:flex-start;">
+
+    <!-- Accordion sidebar demo -->
+    <div style="width:260px;background:#162040;border-radius:12px;overflow:hidden;flex-shrink:0;">
+      <!-- Logo -->
+      <div style="padding:16px;border-bottom:1px solid rgba(255,255,255,.07);">
+        <div style="font-size:20px;font-weight:900;color:#fff;letter-spacing:-.02em;">b<span style="color:#EF4429;">o</span>nb<span style="color:#EF4429;">o</span>n shop</div>
+        <div style="font-size:9px;color:rgba(255,255,255,.4);letter-spacing:.5px;margin-top:4px;">giá ngon, bán gọn</div>
+      </div>
+      <!-- Expanded group -->
+      <div style="display:flex;align-items:center;gap:8px;padding:12px 16px;font-size:14px;font-weight:600;color:rgba(255,255,255,.85);">
+        <svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8" style="opacity:.85;"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span style="flex:1;">Quản lý sản phẩm</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2" style="opacity:.55;transform:rotate(180deg);"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <!-- Sub-items -->
+      <div style="padding-bottom:4px;">
+        <div style="padding:8px 16px 8px 48px;font-size:14px;font-weight:600;color:#fff;background:rgba(255,255,255,.1);">Danh sách cuộn tôn</div>
+        <div style="padding:8px 16px 8px 48px;font-size:14px;color:rgba(255,255,255,.6);">Danh sách sản phẩm</div>
+        <div style="padding:8px 16px 8px 48px;font-size:14px;color:rgba(255,255,255,.6);">Danh sách giá bán</div>
+      </div>
+      <!-- Collapsed groups -->
+      <div style="display:flex;align-items:center;gap:8px;padding:12px 16px;font-size:14px;font-weight:600;color:rgba(255,255,255,.8);">
+        <svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8" style="opacity:.85;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span style="flex:1;">Quản lý cửa hàng</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2" style="opacity:.55;"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;padding:12px 16px;font-size:14px;font-weight:600;color:rgba(255,255,255,.8);">
+        <svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8" style="opacity:.85;"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span style="flex:1;">Quản lý đơn hàng</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2" style="opacity:.55;"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+    </div>
+
+    <!-- Right: tabs + topbar spec -->
+    <div style="flex:1;">
+      <div class="sub-label" style="margin-top:0;">Tab Navigation — 2px indigo bottom border khi active</div>
+      <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;overflow:hidden;margin-bottom:20px;">
+        <div style="display:flex;border-bottom:1px solid #E5E7EB;">
+          <div style="padding:12px 16px;font-size:14px;font-weight:600;color:#071640;border-bottom:2px solid #071640;margin-bottom:-1px;">Tất cả 128</div>
+          <div style="padding:12px 16px;font-size:14px;color:#6B7280;">Chờ duyệt</div>
+          <div style="padding:12px 16px;font-size:14px;color:#6B7280;">Đang giao</div>
+          <div style="padding:12px 16px;font-size:14px;color:#6B7280;">Hoàn thành</div>
+        </div>
+        <div style="padding:16px;font-size:14px;color:#9CA3AF;">Tab content area</div>
+      </div>
+
+      <div class="sub-label">Topbar — phủ content area (KHÔNG span sidebar)</div>
+      <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;height:56px;display:flex;align-items:center;padding:0 16px 0 0;box-shadow:0 1px 3px rgba(15,23,42,.06);">
+        <div style="width:48px;display:flex;justify-content:center;color:#6B7280;">
+          <svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="16" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
+        </div>
+        <div style="flex:1;"></div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" stroke="#6B7280" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" stroke="#6B7280" fill="none" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/></svg>
+          <div style="width:28px;height:28px;border-radius:50%;border:1px solid #E5E7EB;display:flex;align-items:center;justify-content:center;color:#6B7280;"><svg width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <span style="font-size:14px;color:#4B5563;">user@company.vn</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TABLES ═══════════════════════════════════════════════ -->
+<section id="tables">
+  <h2 class="sec-title">Bảng dữ liệu</h2>
+  <p class="sec-desc">Header uppercase 12px semi-bold. Row hover: bg #F9FAFB. Số liệu: IBM Plex Mono, right-aligned.</p>
+  <div style="background:#fff;border:1px solid #E5E7EB;border-radius:12px;overflow:hidden;">
+    <table class="tbl" style="width:100%;">
+      <thead>
+        <tr>
+          <th>Tên cửa hàng</th>
+          <th>Mã</th>
+          <th>Khu vực</th>
+          <th>Trạng thái</th>
+          <th style="text-align:right;">Doanh thu (₫)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="font-weight:500;">Cửa hàng Minh Tâm</td>
+          <td><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;background:#F3F4F6;padding:2px 6px;border-radius:4px;color:#071640;">CH-00124</span></td>
+          <td>Hồ Chí Minh</td>
+          <td><span class="pill pill-success" style="font-size:12px;padding:3px 8px;">Đang hoạt động</span></td>
+          <td class="mono">482,500,000</td>
+        </tr>
+        <tr>
+          <td style="font-weight:500;">Tạp hóa Lan Anh</td>
+          <td><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;background:#F3F4F6;padding:2px 6px;border-radius:4px;color:#071640;">CH-00125</span></td>
+          <td>Hà Nội</td>
+          <td><span class="pill pill-warning" style="font-size:12px;padding:3px 8px;">Chờ duyệt</span></td>
+          <td class="mono">128,750,000</td>
+        </tr>
+        <tr>
+          <td style="font-weight:500;">Nhà thuốc Phúc Lợi</td>
+          <td><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;background:#F3F4F6;padding:2px 6px;border-radius:4px;color:#071640;">CH-00126</span></td>
+          <td>Đà Nẵng</td>
+          <td><span class="pill pill-muted" style="font-size:12px;padding:3px 8px;">Tạm dừng</span></td>
+          <td class="mono">0</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="padding:10px 14px;border-top:1px solid #F3F4F6;display:flex;align-items:center;justify-content:space-between;font-size:12px;color:#6B7280;background:#F9FAFB;">
+      <span>Số dòng mỗi trang: <select style="border:none;background:transparent;font-size:12px;color:#071640;font-weight:600;"><option>50</option><option>10</option><option>20</option><option>100</option></select></span>
+      <span>1 - 50 / 128 &nbsp;|◀ ◀ ▶ ▶|</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ LAYOUT PATTERNS ══════════════════════════════════════ -->
+<section id="layout-table">
+  <h2 class="sec-title">Pattern: Màn hình danh sách</h2>
+  <p class="sec-desc">Status tabs (optional) → Filter panel collapsible → Action buttons → Table với pagination.</p>
+  <div class="layout-diagram" style="display:flex;">
+    <!-- Sidebar: full height, logo at top -->
+    <div class="layout-sidebar" style="width:160px;flex-shrink:0;">
+      <div style="font-size:13px;font-weight:900;color:#fff;padding:4px 8px 10px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:6px;">b<span style="color:#EF4429;">o</span>nb<span style="color:#EF4429;">o</span>n shop</div>
+      <div style="background:rgba(255,255,255,.1);border-radius:4px;padding:6px 8px;font-size:9px;color:#fff;margin-bottom:3px;">Quản lý sản phẩm ⌄</div>
+      <div style="padding:5px 8px 5px 20px;font-size:9px;color:rgba(255,255,255,.7);background:rgba(255,255,255,.06);border-radius:3px;margin-bottom:2px;">Danh sách cuộn tôn</div>
+      <div style="padding:6px 8px;font-size:9px;color:rgba(255,255,255,.5);">Quản lý cửa hàng ›</div>
+      <div style="padding:6px 8px;font-size:9px;color:rgba(255,255,255,.5);">Quản lý đơn hàng ›</div>
+    </div>
+    <!-- Content column: topbar + body -->
+    <div style="flex:1;display:flex;flex-direction:column;">
+      <!-- Topbar over content only -->
+      <div style="height:36px;background:#fff;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;padding:0 12px;">
+        <span style="font-size:11px;color:#6B7280;">☰</span>
+        <div style="flex:1;"></div>
+        <span style="font-size:10px;color:#9CA3AF;">🇻🇳 · ⛶ · ◉ user@company.vn</span>
+      </div>
+      <div style="flex:1;padding:14px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+          <div><div style="font-size:9px;color:#9CA3AF;margin-bottom:2px;">Trang chủ / Danh sách</div><div style="font-size:14px;font-weight:700;color:#071640;">Quản lý cửa hàng</div></div>
+          <div class="layout-block" style="background:#071640;color:#fff;font-size:9px;">+ Thêm mới</div>
+        </div>
+        <div style="display:flex;gap:6px;margin-bottom:10px;">
+          <div style="padding:5px 10px;border-bottom:2px solid #071640;font-size:12px;font-weight:700;color:#071640;">Tất cả (128)</div>
+          <div style="padding:5px 10px;font-size:12px;color:#9CA3AF;">Hoạt động (98)</div>
+          <div style="padding:5px 10px;font-size:12px;color:#9CA3AF;">Tạm dừng (30)</div>
+        </div>
+        <div style="background:#F9FAFB;border:1px solid #E5E7EB;border-radius:8px;padding:10px;margin-bottom:8px;">
+          <div style="font-size:9px;color:#9CA3AF;margin-bottom:6px;">▼ BỘ LỌC</div>
+          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;">
+            <div class="layout-block" style="font-size:9px;">Tìm kiếm...</div>
+            <div class="layout-block" style="font-size:9px;">Khu vực</div>
+            <div class="layout-block" style="font-size:9px;">Trạng thái</div>
+            <div class="layout-block" style="font-size:9px;">Từ ngày</div>
+            <div class="layout-block" style="font-size:9px;background:#E5E7EB;">Xóa lọc</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:6px;margin-bottom:8px;">
+          <div class="layout-block" style="font-size:9px;">Xuất dữ liệu</div>
+          <div class="layout-block" style="font-size:9px;">Xem lịch sử</div>
+          <div class="layout-block" style="font-size:9px;">Cập nhật ▾</div>
+        </div>
+        <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;overflow:hidden;">
+          <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:0;background:#F9FAFB;border-bottom:1px solid #E5E7EB;">
+            <div style="padding:7px 10px;font-size:9px;font-weight:700;color:#6B7280;letter-spacing:.8px;text-transform:uppercase;">TÊN CỬA HÀNG</div>
+            <div style="padding:7px 10px;font-size:9px;font-weight:700;color:#6B7280;letter-spacing:.8px;text-transform:uppercase;">MÃ</div>
+            <div style="padding:7px 10px;font-size:9px;font-weight:700;color:#6B7280;letter-spacing:.8px;text-transform:uppercase;">KHU VỰC</div>
+            <div style="padding:7px 10px;font-size:9px;font-weight:700;color:#6B7280;letter-spacing:.8px;text-transform:uppercase;">TRẠNG THÁI</div>
+            <div style="padding:7px 10px;font-size:9px;font-weight:700;color:#6B7280;letter-spacing:.8px;text-transform:uppercase;text-align:right;">DOANH THU</div>
+          </div>
+          <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;border-bottom:1px solid #F3F4F6;">
+            <div style="padding:8px 10px;font-size:12px;font-weight:500;">Cửa hàng Minh Tâm</div>
+            <div style="padding:8px 10px;font-size:9px;font-family:monospace;color:#071640;">CH-00124</div>
+            <div style="padding:8px 10px;font-size:12px;">Hồ Chí Minh</div>
+            <div style="padding:8px 10px;"><span style="background:#ECFDF5;color:#059669;padding:2px 7px;border-radius:100px;font-size:9px;font-weight:600;">Hoạt động</span></div>
+            <div style="padding:8px 10px;font-size:12px;font-family:monospace;text-align:right;">482,500,000</div>
+          </div>
+          <div style="padding:6px 10px;font-size:9px;color:#9CA3AF;background:#F9FAFB;text-align:center;">1 - 50 / 128 &nbsp; ◀ ▶</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="layout-form">
+  <h2 class="sec-title">Pattern: Màn hình Form</h2>
+  <p class="sec-desc">Save button top-right (không phải footer). Fieldsets 2 cột. Scroll nội dung.</p>
+  <div class="layout-diagram">
+    <div class="layout-topbar">
+      <span style="font-size:12px;color:#9CA3AF;">Danh sách / <strong style="color:#071640;">Thêm mới cửa hàng</strong></span>
+      <div style="display:flex;gap:6px;">
+        <div style="padding:4px 10px;border-radius:8px;border:1px solid #E5E7EB;font-size:12px;color:#4B5563;">Hủy</div>
+        <div style="padding:4px 10px;border-radius:8px;background:#071640;font-size:12px;color:#fff;">Lưu</div>
+      </div>
+    </div>
+    <div style="padding:16px;overflow-y:auto;">
+      <div style="border:1px solid #D1D5DB;border-radius:12px;padding:14px;margin-bottom:10px;">
+        <div style="font-size:12px;font-weight:600;color:#4B5563;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #EEF2F6;">Thông tin cơ bản</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div><div style="font-size:9px;font-weight:600;color:#6B7280;letter-spacing:.4px;text-transform:uppercase;margin-bottom:4px;">TÊN CỬA HÀNG</div><div style="height:30px;border:1px solid #E5E7EB;border-radius:8px;background:#fff;"></div></div>
+          <div><div style="font-size:9px;font-weight:600;color:#6B7280;letter-spacing:.4px;text-transform:uppercase;margin-bottom:4px;">MÃ TỰ ĐỘNG</div><div style="height:30px;border:1px solid #E5E7EB;border-radius:8px;background:#EEF2F6;"></div></div>
+          <div><div style="font-size:9px;font-weight:600;color:#6B7280;letter-spacing:.4px;text-transform:uppercase;margin-bottom:4px;">KHU VỰC</div><div style="height:30px;border:1px solid #E5E7EB;border-radius:8px;background:#fff;"></div></div>
+          <div><div style="font-size:9px;font-weight:600;color:#6B7280;letter-spacing:.4px;text-transform:uppercase;margin-bottom:4px;">TRẠNG THÁI</div><div style="height:30px;border:1px solid #E5E7EB;border-radius:8px;background:#fff;"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="layout-detail">
+  <h2 class="sec-title">Pattern: Màn hình chi tiết</h2>
+  <p class="sec-desc">Info summary bar 4 cột → Tab group → Table (optional).</p>
+  <div class="layout-diagram">
+    <div style="padding:12px 14px;border-bottom:1px solid #E5E7EB;display:flex;justify-content:space-between;align-items:center;">
+      <div><div style="font-size:9px;color:#9CA3AF;margin-bottom:2px;">Danh sách / Chi tiết</div><div style="font-size:14px;font-weight:700;color:#071640;">Cửa hàng Minh Tâm</div></div>
+      <div style="display:flex;gap:6px;"><div style="padding:4px 10px;border-radius:8px;border:1px solid #E5E7EB;font-size:12px;color:#4B5563;">Chỉnh sửa</div></div>
+    </div>
+    <div style="background:#F9FAFB;border-bottom:1px solid #E5E7EB;padding:12px 14px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+      <div><div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#9CA3AF;margin-bottom:3px;">MÃ CỬA HÀNG</div><div style="font-size:12px;font-weight:700;font-family:monospace;color:#071640;">CH-00124</div></div>
+      <div><div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#9CA3AF;margin-bottom:3px;">KHU VỰC</div><div style="font-size:12px;font-weight:700;color:#111827;">Hồ Chí Minh</div></div>
+      <div><div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#9CA3AF;margin-bottom:3px;">TRẠNG THÁI</div><span style="background:#ECFDF5;color:#059669;padding:2px 8px;border-radius:100px;font-size:12px;font-weight:600;">Đang hoạt động</span></div>
+      <div><div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#9CA3AF;margin-bottom:3px;">DOANH THU</div><div style="font-size:12px;font-weight:700;font-family:monospace;color:#111827;">482,500,000 ₫</div></div>
+    </div>
+    <div style="border-bottom:1px solid #E5E7EB;display:flex;">
+      <div style="padding:8px 14px;font-size:12px;font-weight:700;color:#071640;border-bottom:2px solid #071640;margin-bottom:-1px;">Đơn hàng</div>
+      <div style="padding:8px 14px;font-size:12px;color:#9CA3AF;">Lịch sử</div>
+      <div style="padding:8px 14px;font-size:12px;color:#9CA3AF;">Cài đặt</div>
+    </div>
+    <div style="padding:12px 14px;font-size:12px;color:#9CA3AF;">[Table content area]</div>
+  </div>
+</section>
+
+<section id="layout-dialog">
+  <h2 class="sec-title">Pattern: Dialog</h2>
+  <p class="sec-desc">Confirm 40vw · Form 70vw. Footer: [Hủy stroked] [Xác nhận raised] right-aligned.</p>
+  <div class="grid g2">
+    <div>
+      <div class="sub-label" style="margin-top:0;">Confirm Dialog (40vw)</div>
+      <div style="background:#fff;border:1px solid #E5E7EB;border-radius:16px;overflow:hidden;box-shadow:0 10px 28px rgba(15,23,42,.10);">
+        <div style="padding:16px 18px;border-bottom:1px solid #EEF2F6;"><div style="font-size:14px;font-weight:700;color:#111827;">Xác nhận xóa</div></div>
+        <div style="padding:16px 18px;font-size:14px;color:#4B5563;">Bạn có chắc muốn xóa cửa hàng <strong>Minh Tâm</strong>? Hành động này không thể hoàn tác.</div>
+        <div style="padding:12px 18px;border-top:1px solid #EEF2F6;display:flex;justify-content:flex-end;gap:8px;">
+          <button class="btn btn-ghost btn-sm">Hủy</button>
+          <button class="btn btn-danger btn-sm">Xóa</button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="sub-label" style="margin-top:0;">Form Dialog (70vw)</div>
+      <div style="background:#fff;border:1px solid #E5E7EB;border-radius:16px;overflow:hidden;box-shadow:0 10px 28px rgba(15,23,42,.10);">
+        <div style="padding:16px 18px;border-bottom:1px solid #EEF2F6;"><div style="font-size:14px;font-weight:700;color:#111827;">Thêm cửa hàng mới</div></div>
+        <div style="padding:16px 18px;display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div class="field-wrap"><label class="field-label">TÊN CỬA HÀNG</label><input class="field" style="height:36px;" type="text" placeholder="Nhập tên..."></div>
+          <div class="field-wrap"><label class="field-label">KHU VỰC</label><select class="field" style="height:36px;"><option>Chọn khu vực...</option></select></div>
+        </div>
+        <div style="padding:12px 18px;border-top:1px solid #EEF2F6;display:flex;justify-content:flex-end;gap:8px;">
+          <button class="btn btn-ghost btn-sm">Hủy</button>
+          <button class="btn btn-primary btn-sm">Lưu</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ STATES ════════════════════════════════════════════════ -->
+<section id="states">
+  <h2 class="sec-title">Trạng thái tương tác</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <div>
+      <div class="sub-label" style="margin-top:0;">Hover</div>
+      <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:12px;font-size:12px;line-height:2;color:#4B5563;">
+        <div>Card → shadow-sm → <strong style="color:#071640;">shadow-md</strong></div>
+        <div>Table row → bg <strong style="color:#071640;">#F9FAFB</strong></div>
+        <div>Nav item → <strong style="color:#071640;">rgba(255,255,255,.06)</strong> overlay</div>
+        <div>Button → darken đến <strong style="color:#071640;">#15254D</strong> — không scale/lift</div>
+      </div>
+    </div>
+    <div>
+      <div class="sub-label" style="margin-top:0;">Active / Selected</div>
+      <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:12px;font-size:12px;line-height:2;color:#4B5563;">
+        <div>Nav sidebar → white pill bg + <strong style="color:#071640;">indigo text</strong></div>
+        <div>Tab → <strong style="color:#071640;">2px indigo bottom border</strong> + indigo text</div>
+        <div>Input focus → indigo border + <strong style="color:#071640;">inset 1px indigo shadow</strong></div>
+        <div>Toggle/Checkbox → indigo fill, 200ms</div>
+      </div>
+    </div>
+    <div>
+      <div class="sub-label" style="margin-top:0;">Loading</div>
+      <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:12px;font-size:12px;line-height:2;color:#4B5563;">
+        <div>Table body → <strong style="color:#071640;">opacity 0.2</strong>, no interaction</div>
+        <div>Section → opacity 0.2, no interaction</div>
+        <div>Button → replace label với <strong style="color:#071640;">24px spinner</strong></div>
+      </div>
+    </div>
+    <div>
+      <div class="sub-label" style="margin-top:0;">Empty State</div>
+      <div style="background:#fff;border:1px solid #E5E7EB;border-radius:8px;padding:12px;font-size:12px;line-height:2;color:#4B5563;">
+        <div>Glyph: <strong style="color:#071640;">64×64px</strong>, radius 12px, bg #F3F4F6</div>
+        <div>Icon color: <strong style="color:#071640;">#9CA3AF</strong></div>
+        <div>Message: operational tone, không marketing</div>
+        <div>CTA button nếu user có thể thực hiện hành động</div>
+        <div>Layout: <strong style="color:#071640;">VERTICAL, center-center</strong> — Glyph → gap 16px → Title (center) → gap 8px → Desc (center, max-width 320px). KHÔNG dùng position:absolute cho 3 layer này (chốt 2026-07-06, tránh lỗi chồng đè)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DATA DISPLAY ══════════════════════════════════════════ -->
+<section id="data">
+  <h2 class="sec-title">Hiển thị dữ liệu</h2>
+  <div style="background:#fff;border:1px solid #E5E7EB;border-radius:12px;padding:18px;display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+    <div>
+      <div class="sub-label" style="margin-top:0;">Số tiền & Số lớn</div>
+      <div style="font-size:28px;font-weight:700;font-family:'IBM Plex Mono',monospace;color:#111827;font-variant-numeric:tabular-nums;">482,500,000 ₫</div>
+      <div style="font-size:18px;font-weight:600;font-family:'IBM Plex Mono',monospace;color:#111827;margin-top:6px;">2.48 tỷ ₫</div>
+      <div style="font-size:14px;font-family:'IBM Plex Mono',monospace;color:#111827;margin-top:6px;">150 triệu ₫</div>
+      <div style="font-size:12px;color:#9CA3AF;margin-top:8px;">IBM Plex Mono · tabular-nums · comma phân nghìn · space trước ₫</div>
+    </div>
+    <div>
+      <div class="sub-label" style="margin-top:0;">Ngày & ID</div>
+      <div style="font-size:14px;font-family:'IBM Plex Mono',monospace;color:#111827;">23/04/2026</div>
+      <div style="font-size:14px;font-family:'IBM Plex Mono',monospace;color:#111827;margin-top:4px;">23/04/2026 14:30</div>
+      <div style="font-size:12px;font-family:'IBM Plex Mono',monospace;background:#F3F4F6;padding:4px 8px;border-radius:4px;color:#071640;display:inline-block;margin-top:8px;">BP-2024-001234</div>
+      <div style="font-size:12px;color:#9CA3AF;margin-top:8px;">Định dạng DD/MM/YYYY · ID không bao giờ truncate</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MOTION ════════════════════════════════════════════════ -->
+<section id="motion">
+  <h2 class="sec-title">Chuyển động</h2>
+  <div style="background:#fff;border:1px solid #E5E7EB;border-radius:12px;padding:18px;font-size:12px;line-height:2;color:#4B5563;">
+    <div><strong style="color:#071640;">Được phép:</strong> fade, border-color transition, shadow transition, opacity</div>
+    <div><strong style="color:#DC2626;">Không dùng:</strong> bounce, elastic, slide-in, scale on hover, lift/float</div>
+    <div style="margin-top:8px;"><strong style="color:#071640;">Duration:</strong> 120ms (label float) · 200ms (toggle, checkbox, standard) · 320ms (panel transitions)</div>
+    <div><strong style="color:#071640;">Easing:</strong> <code>cubic-bezier(.4,0,.2,1)</code> — Material Design standard</div>
+  </div>
+</section>
+
+<!-- ══ PRINCIPLES ════════════════════════════════════════════ -->
+<section id="principles">
+  <h2 class="sec-title">Nguyên tắc thiết kế</h2>
+  <div class="grid g2">
+    <div class="card"><div style="font-size:12px;font-weight:700;color:#071640;margin-bottom:8px;">Ngôn ngữ</div><div style="font-size:12px;color:#4B5563;line-height:1.7;">Tiếng Việt là ngôn ngữ UI chính. English chỉ dùng cho acronyms (GT, MT, NPP, KPI, AOV, SLA) và tên thương hiệu / campaign.</div></div>
+    <div class="card"><div style="font-size:12px;font-weight:700;color:#071640;margin-bottom:8px;">Màu sắc</div><div style="font-size:12px;color:#4B5563;line-height:1.7;">Navy <code>#071640</code> là màu chủ đạo duy nhất. Red <code>#DC2626</code> chỉ cho destructive/warn. Một accent màu mỗi surface — không mix màu.</div></div>
+    <div class="card"><div style="font-size:12px;font-weight:700;color:#071640;margin-bottom:8px;">Bề mặt</div><div style="font-size:12px;color:#4B5563;line-height:1.7;">Flat surface với cool shadows. Không gradient trong core product. App bg #F3F4F6, cards #FFFFFF. Không ảnh, không illustration.</div></div>
+    <div class="card"><div style="font-size:12px;font-weight:700;color:#071640;margin-bottom:8px;">Density</div><div style="font-size:12px;color:#4B5563;line-height:1.7;">Default body 13px — dense, data-first. Touch target tối thiểu 32px. Comfortable: card 20px · form 44px. Compact: card 14px · form 32px.</div></div>
+  </div>
+</section>
+
+</main>
+</div>
+</body>
+</html>

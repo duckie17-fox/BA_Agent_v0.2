@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Brand Portal — App Layout</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://rsms.me/">
+<link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;font-family:'Inter var',Inter,ui-sans-serif,system-ui,sans-serif;font-size:14px;-webkit-font-smoothing:antialiased;background:#F3F4F6;color:#111827;}
+
+/* ── App shell ────────────────────────────────────────────
+   SIDEBAR: full height (left), dark, logo INSIDE at top
+   CONTENT: right column = topbar (white) + scrollable body
+   Topbar phủ content area, KHÔNG span qua sidebar
+─────────────────────────────────────────────────────────── */
+.app{display:grid;grid-template-columns:280px 1fr;height:100vh;overflow:hidden;}
+
+/* ══ SIDEBAR — 280px · navy #162040 · FULL HEIGHT ════════════
+   Logo bonbon shop ở trên cùng (trong sidebar)
+   Nav accordion: parent group (icon+label+chevron) > sub-items
+══════════════════════════════════════════════════════════ */
+.sidebar{
+  grid-column:1;
+  background:#162040;
+  height:100vh;
+  overflow-y:auto;
+  display:flex;flex-direction:column;
+}
+.sidebar::-webkit-scrollbar{width:4px;}
+.sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:2px;}
+
+/* Logo zone — inside sidebar, top */
+.sb-logo{padding:20px 16px 16px;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:4px;}
+.sb-logo-bon{font-size:24px;font-weight:900;color:#fff;letter-spacing:-.02em;line-height:1;}
+.sb-logo-bon .r{color:#EF4429;}
+.sb-logo-tagline{font-size:9px;color:rgba(255,255,255,.4);letter-spacing:.5px;margin-top:4px;}
+
+/* Nav group — parent row (collapsible) */
+.nav-parent{
+  display:flex;align-items:center;gap:8px;
+  padding:12px 16px;
+  font-size:14px;font-weight:600;
+  color:rgba(255,255,255,.8);
+  cursor:pointer;
+  transition:background 120ms;
+}
+.nav-parent:hover{background:rgba(255,255,255,.05);}
+.np-icon{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;flex-shrink:0;opacity:.85;}
+.np-label{flex:1;}
+.np-chevron{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;flex-shrink:0;opacity:.55;transition:transform 200ms;}
+.nav-parent.expanded .np-chevron{transform:rotate(180deg);}
+
+/* Sub-items */
+.nav-sub{display:none;padding-bottom:4px;}
+.nav-group.open .nav-sub{display:block;}
+.nav-sub-item{
+  display:block;
+  padding:8px 16px 8px 48px;
+  font-size:14px;font-weight:400;
+  color:rgba(255,255,255,.6);
+  cursor:pointer;text-decoration:none;
+  transition:background 100ms,color 100ms;
+}
+.nav-sub-item:hover{color:rgba(255,255,255,.9);background:rgba(255,255,255,.04);}
+.nav-sub-item.active{background:rgba(255,255,255,.1);color:#fff;font-weight:600;}
+
+/* Single nav item (no sub-items) — still shows chevron on right */
+.nav-single{
+  display:flex;align-items:center;gap:8px;
+  padding:12px 16px;
+  font-size:14px;font-weight:600;
+  color:rgba(255,255,255,.8);
+  cursor:pointer;text-decoration:none;
+  transition:background 120ms;
+}
+.nav-single:hover{background:rgba(255,255,255,.05);}
+.ns-icon{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;flex-shrink:0;opacity:.85;}
+
+/* ══ CONTENT — right column ═══════════════════════════════
+   Flex column: topbar (fixed 64px) + content-body (scroll)
+══════════════════════════════════════════════════════════ */
+.content{
+  grid-column:2;
+  height:100vh;
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  background:#F3F4F6;
+}
+
+/* ── TOPBAR — white, only over content (NOT full width) ───
+   LEFT: hamburger ··· RIGHT: icon/language (globe, KHÔNG dùng flag) · fullscreen · user
+   KHÔNG có logo (logo ở sidebar), KHÔNG có breadcrumb, KHÔNG có divider giữa cụm icon phải
+   (đã verify từ DOM export thật — xem .claude/skills/design-instruction/brand-portal/app-shell-reference.md §2)
+─────────────────────────────────────────────────────────── */
+.topbar{
+  height:64px;background:#fff;flex-shrink:0;
+  border-bottom:1px solid #E5E7EB;
+  box-shadow:0 1px 3px rgba(15,23,42,.06),0 1px 2px rgba(15,23,42,.04);
+  display:flex;align-items:center;
+  padding:0 16px 0 0;
+}
+.tb-ham{width:64px;height:64px;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;color:#6B7280;border:none;background:transparent;}
+.tb-ham:hover{color:#071640;}
+.tb-ham svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;}
+.tb-spacer{flex:1;}
+.tb-actions{display:flex;align-items:center;gap:8px;}
+.tb-icon{width:36px;height:36px;border-radius:8px;border:none;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#6B7280;position:relative;}
+.tb-icon:hover{background:#F3F4F6;}
+.tb-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;}
+.tb-user{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;cursor:pointer;}
+.tb-user:hover{background:#F3F4F6;}
+.tb-user-icon{width:28px;height:28px;border-radius:50%;border:1px solid #E5E7EB;display:flex;align-items:center;justify-content:center;color:#6B7280;flex-shrink:0;}
+.tb-user-icon svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;}
+.tb-user-email{font-size:14px;color:#4B5563;}
+
+/* ── Content body (scrollable) ─────────────────────────── */
+.content-body{flex:1;overflow-y:auto;display:flex;flex-direction:column;}
+.content-body::-webkit-scrollbar{width:6px;}
+.content-body::-webkit-scrollbar-thumb{background:#D1D5DB;border-radius:3px;}
+
+/* Page header: title + action buttons (no breadcrumb here) */
+.page-header{
+  background:#fff;border-bottom:1px solid #E5E7EB;
+  padding:16px 24px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-shrink:0;
+}
+.ph-title{font-size:24px;font-weight:500;color:#071640;letter-spacing:-.025em;}
+.ph-actions{display:flex;align-items:center;gap:8px;}
+
+/* Tabs: 2px indigo bottom border for active */
+.tabs-row{background:#fff;border-bottom:1px solid #E5E7EB;padding:0 24px;display:flex;flex-shrink:0;}
+.tab{padding:12px 16px;font-size:14px;font-weight:400;color:#6B7280;cursor:pointer;border:none;background:transparent;border-bottom:2px solid transparent;margin-bottom:-1px;font-family:inherit;transition:color 120ms;white-space:nowrap;}
+.tab:hover{color:#111827;}
+.tab.active{color:#071640;font-weight:600;border-bottom-color:#071640;}
+
+/* Sub-actions row */
+.sub-actions{background:#fff;border-bottom:1px solid #E5E7EB;padding:12px 24px;display:flex;align-items:center;gap:8px;flex-shrink:0;}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:0 16px;height:44px;border-radius:8px;font-size:14px;font-weight:500;font-family:inherit;cursor:pointer;border:none;white-space:nowrap;transition:background 120ms;}
+.btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;flex-shrink:0;}
+.btn-primary{background:#071640;color:#fff;}
+.btn-primary:hover{background:#15254D;}
+.btn-ghost{background:#fff;color:#4B5563;border:1px solid #E5E7EB;}
+.btn-ghost:hover{background:#F3F4F6;}
+.btn-with-arrow::after{content:'▾';margin-left:2px;font-size:10px;}
+
+/* Table */
+.table-wrap{padding:16px 24px;flex:1;}
+.table-card{background:#fff;border:1px solid #E5E7EB;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(15,23,42,.06),0 1px 2px rgba(15,23,42,.04);}
+.table-card-header{padding:16px;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;gap:8px;}
+.tc-title{font-size:16px;font-weight:600;color:#071640;}
+.tc-badge{padding:4px 8px;border-radius:100px;font-size:12px;font-weight:600;}
+.tc-badge-teal{background:#F0FDFA;color:#0D9488;}
+.tc-badge-gray{background:#F3F4F6;color:#6B7280;}
+.tc-spacer{flex:1;}
+
+.dtable{width:100%;border-collapse:collapse;}
+.dtable thead th{padding:8px 12px;text-align:left;font-size:12px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:#6B7280;background:#F9FAFB;border-bottom:1px solid #E5E7EB;white-space:nowrap;}
+.dtable thead th.r{text-align:right;}
+.dtable thead th.c{text-align:center;width:40px;}
+.dtable tbody tr{border-bottom:1px solid #F3F4F6;transition:background 80ms;}
+.dtable tbody tr:hover{background:#F9FAFB;}
+.dtable tbody tr:last-child{border-bottom:none;}
+.dtable td{padding:12px;font-size:14px;color:#374151;vertical-align:middle;}
+.dtable td.c{text-align:center;width:40px;}
+.dtable td.r{text-align:right;}
+.td-link{color:#2563EB;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;cursor:pointer;}
+.td-link:hover{text-decoration:underline;}
+.td-name{font-weight:500;color:#111827;}
+.td-sub{font-size:12px;color:#9CA3AF;margin-top:2px;}
+.td-mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;font-size:14px;color:#111827;}
+.td-chip{display:inline-block;padding:4px 8px;border-radius:4px;font-size:12px;font-weight:500;background:#F3F4F6;color:#4B5563;}
+/* Status = colored text only */
+.s-blue{color:#2563EB;font-weight:500;}
+.s-green{color:#059669;font-weight:500;}
+.s-amber{color:#D97706;font-weight:500;}
+.s-red{color:#DC2626;font-weight:500;}
+.s-gray{color:#6B7280;}
+.row-btn{border:none;background:transparent;cursor:pointer;color:#9CA3AF;padding:4px;border-radius:4px;display:flex;align-items:center;}
+.row-btn:hover{background:#F3F4F6;color:#4B5563;}
+.row-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;}
+.row-sel{background:#F8FBFF !important;}
+.cb-on{width:16px;height:16px;background:#071640;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;}
+.cb-on svg{width:10px;height:10px;stroke:#fff;fill:none;stroke-width:3;}
+
+/* Pagination: Số dòng mỗi trang [50▾] 1-10/128 |< < > >| */
+.pagination{padding:12px 16px;border-top:1px solid #E5E7EB;display:flex;align-items:center;gap:8px;font-size:14px;color:#6B7280;background:#fff;}
+.pag-select{border:1px solid #E5E7EB;background:#fff;font-size:14px;font-family:inherit;padding:4px 8px;border-radius:4px;color:#111827;font-weight:500;cursor:pointer;}
+.pag-range{color:#4B5563;}
+.pag-btn{width:28px;height:28px;border:1px solid #E5E7EB;background:#fff;border-radius:4px;cursor:pointer;font-size:12px;font-weight:600;color:#4B5563;display:inline-flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;transition:background 100ms;}
+.pag-btn:hover:not([disabled]){background:#F3F4F6;}
+.pag-btn[disabled]{opacity:.35;cursor:default;}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- ══ SIDEBAR — full height, logo inside ══════════════════ -->
+<!-- ⚠️ Tên nhóm nav dưới đây CHỈ minh hoạ cơ chế accordion (parent/sub-item/chevron),
+     KHÔNG phải danh sách nhóm cấp 1 thật của VisibilityPRO/BonBonShop.
+     Allowlist 9 nhóm thật (đã verify từ DOM) → xem .claude/skills/design-instruction/brand-portal/app-shell-reference.md §1 -->
+<aside class="sidebar">
+
+  <!-- Logo -->
+  <div class="sb-logo">
+    <div class="sb-logo-bon">b<span class="r">o</span>nb<span class="r">o</span>n shop</div>
+    <div class="sb-logo-tagline">giá ngon, bán gọn</div>
+  </div>
+
+  <!-- Quản lý sản phẩm — EXPANDED -->
+  <div class="nav-group open">
+    <div class="nav-parent expanded">
+      <svg class="np-icon" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <span class="np-label">Quản lý sản phẩm</span>
+      <svg class="np-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="nav-sub">
+      <a class="nav-sub-item active">Danh sách cuộn tôn</a>
+      <a class="nav-sub-item">Danh sách sản phẩm</a>
+      <a class="nav-sub-item">Cài đặt giới thiệu</a>
+      <a class="nav-sub-item">Danh sách giá bán</a>
+      <a class="nav-sub-item">Danh mục sản phẩm</a>
+      <a class="nav-sub-item">Danh sách nhóm sản phẩm</a>
+      <a class="nav-sub-item">Danh sách đơn vị sản phẩm</a>
+      <a class="nav-sub-item">Danh sách bảng giá</a>
+      <a class="nav-sub-item">Sản phẩm AI nhận diện</a>
+      <a class="nav-sub-item">Nhóm sản phẩm trưng bày</a>
+    </div>
+  </div>
+
+  <!-- Collapsed groups (chevron points right ›) -->
+  <div class="nav-group">
+    <div class="nav-parent">
+      <svg class="np-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      <span class="np-label">Quản lý tài liệu ký số</span>
+      <svg class="np-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </div>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-parent">
+      <svg class="np-icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span class="np-label">Quản lý cửa hàng</span>
+      <svg class="np-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </div>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-parent">
+      <svg class="np-icon" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      <span class="np-label">Quản lý đơn hàng</span>
+      <svg class="np-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </div>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-parent">
+      <svg class="np-icon" viewBox="0 0 24 24"><path d="M22 17H2a3 3 0 0 0 3-3V9a7 7 0 0 1 14 0v5a3 3 0 0 0 3 3zm-8.27 4a2 2 0 0 1-3.46 0"/></svg>
+      <span class="np-label">Quản lý thông báo</span>
+      <svg class="np-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </div>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-parent">
+      <svg class="np-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <span class="np-label">Quản lý thông tin hỗ trợ</span>
+      <svg class="np-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </div>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-parent">
+      <svg class="np-icon" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      <span class="np-label">Quản lý Trade marketing</span>
+      <svg class="np-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </div>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-parent">
+      <svg class="np-icon" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      <span class="np-label">Báo cáo</span>
+      <svg class="np-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </div>
+  </div>
+
+</aside>
+
+<!-- ══ CONTENT — topbar + body ═════════════════════════════ -->
+<main class="content">
+
+  <!-- TOPBAR — over content only, no logo, no breadcrumb -->
+  <header class="topbar">
+    <button class="tb-ham">
+      <svg viewBox="0 0 24 24"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="16" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
+    </button>
+    <div class="tb-spacer"></div>
+    <div class="tb-actions">
+      <button class="tb-icon" title="Ngôn ngữ">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      </button>
+      <button class="tb-icon" title="Toàn màn hình">
+        <svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+      </button>
+      <div class="tb-user">
+        <div class="tb-user-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <span class="tb-user-email">user@company.vn</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- BODY — scrollable -->
+  <div class="content-body">
+
+    <!-- Page header: title + actions (no breadcrumb) -->
+    <div class="page-header">
+      <div class="ph-title">Báo cáo chi tiết kết quả hình trưng bày</div>
+      <div class="ph-actions">
+        <button class="btn btn-ghost">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Xem lịch sử
+        </button>
+        <button class="btn btn-ghost" style="opacity:.55;">
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Xuất dữ liệu sản phẩm
+        </button>
+        <button class="btn btn-ghost" style="opacity:.55;">
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Xuất kết quả trưng bày
+        </button>
+      </div>
+    </div>
+
+    <!-- Filter grid (4 cols) -->
+    <div style="padding:16px 24px;background:#fff;border-bottom:1px solid #E5E7EB;">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+        <div style="position:relative;border:1px solid #D1D5DB;border-radius:8px;background:#fff;padding:8px 12px;height:48px;display:flex;flex-direction:column;justify-content:center;grid-column:span 1;">
+          <span style="font-size:12px;color:#9CA3AF;">Chương trình trưng bày *</span>
+        </div>
+        <div style="position:relative;border:1px solid #D1D5DB;border-radius:8px;background:#fff;padding:8px 12px;height:48px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:14px;color:#9CA3AF;">Thời gian chụp ảnh *</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" stroke="#9CA3AF" fill="none" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div style="border:1px solid #D1D5DB;border-radius:8px;background:#fff;padding:8px 12px;height:48px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:14px;color:#9CA3AF;">Kết quả trưng bày</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" stroke="#9CA3AF" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div></div>
+        <div style="border:1px solid #D1D5DB;border-radius:8px;background:#fff;padding:8px 12px;height:48px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:14px;color:#9CA3AF;">Region/Vùng</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" stroke="#9CA3AF" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div style="border:1px solid #D1D5DB;border-radius:8px;background:#fff;padding:8px 12px;height:48px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:14px;color:#9CA3AF;">Area/Khu vực</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" stroke="#9CA3AF" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div style="border:1px solid #D1D5DB;border-radius:8px;background:#fff;padding:8px 12px;height:48px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:14px;color:#9CA3AF;">Nhà phân phối</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" stroke="#9CA3AF" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div style="border:1px solid #D1D5DB;border-radius:8px;background:#fff;padding:8px 12px;height:48px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:14px;color:#9CA3AF;">Tuyến bán hàng</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" stroke="#9CA3AF" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div style="border:1px solid #D1D5DB;border-radius:8px;background:#fff;padding:8px 12px;height:48px;display:flex;align-items:center;">
+          <span style="font-size:14px;color:#9CA3AF;">Mã khách hàng</span>
+        </div>
+        <div style="border:1px solid #D1D5DB;border-radius:8px;background:#fff;padding:8px 12px;height:48px;display:flex;align-items:center;">
+          <span style="font-size:14px;color:#9CA3AF;">Mã cửa hàng</span>
+        </div>
+        <div style="border:1px solid #D1D5DB;border-radius:8px;background:#fff;padding:8px 12px;height:48px;display:flex;align-items:center;">
+          <span style="font-size:14px;color:#9CA3AF;">Tên cửa hàng</span>
+        </div>
+        <div style="border:1px solid #D1D5DB;border-radius:8px;background:#fff;padding:8px 12px;height:48px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:14px;color:#9CA3AF;">Sản phẩm</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" stroke="#9CA3AF" fill="none" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+      </div>
+      <!-- Search / Clear: right-aligned -->
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px;">
+        <button class="btn btn-primary">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Tìm kiếm
+        </button>
+        <button class="btn btn-ghost">Xóa</button>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrap">
+      <div class="table-card">
+        <table class="dtable">
+          <thead>
+            <tr>
+              <th>ID hình trưng bày</th>
+              <th>Tháng</th>
+              <th>Tuần</th>
+              <th>Thời gian chụp từ thiết bị</th>
+              <th>Thời gian ghi nhận của hệ thống</th>
+              <th>Region/Vùng</th>
+              <th>Area/Khu vực</th>
+              <th>Nhà phân phối</th>
+              <th>Tuyến bán hàng</th>
+              <th>Mã khách hàng</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a class="td-link">IMG-0042815</a></td>
+              <td>04/2026</td>
+              <td>W15</td>
+              <td>10:24 12/04/2026</td>
+              <td>10:25 12/04/2026</td>
+              <td>Miền Nam</td>
+              <td>HCM-01</td>
+              <td>NPP Miền Nam 01</td>
+              <td>Tuyến 03</td>
+              <td><span class="id-badge" style="font-family:'IBM Plex Mono',monospace;font-size:12px;background:#F3F4F6;padding:4px 8px;border-radius:4px;color:#071640;">KH-00124</span></td>
+            </tr>
+            <tr>
+              <td><a class="td-link">IMG-0042814</a></td>
+              <td>04/2026</td>
+              <td>W15</td>
+              <td>09:12 12/04/2026</td>
+              <td>09:13 12/04/2026</td>
+              <td>Miền Bắc</td>
+              <td>HN-02</td>
+              <td>NPP Miền Bắc 02</td>
+              <td>Tuyến 01</td>
+              <td><span class="id-badge" style="font-family:'IBM Plex Mono',monospace;font-size:12px;background:#F3F4F6;padding:4px 8px;border-radius:4px;color:#071640;">KH-00125</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pagination">
+          <span>Số dòng mỗi trang</span>
+          <select class="pag-select"><option>50</option><option>10</option><option>25</option></select>
+          <span class="pag-range">1 - 50 / 1,284</span>
+          <button class="pag-btn" disabled>|&lt;</button>
+          <button class="pag-btn" disabled>&lt;</button>
+          <button class="pag-btn">&gt;</button>
+          <button class="pag-btn">&gt;|</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content-body -->
+</main>
+</div>
+</body>
+</html>
